@@ -22,6 +22,7 @@
 #include "klee/util/ExprPPrinter.h"
 
 #include <sstream>
+#include <string>
 
 using namespace klee;
 using namespace llvm;
@@ -285,6 +286,15 @@ ref<Expr> Expr::createFromKind(Kind k, std::vector<CreateArg> args) {
   }
 }
 
+void Expr::print_inst(const std::string sCase, const std::string sName) const {
+	llvm::errs().changeColor(llvm::raw_ostream::YELLOW,
+                             /*bold=*/false,
+                             /*bg=*/false);
+ 	llvm::errs() << sCase << " " << sName << ": ";
+  	this->print(llvm::errs());
+  	llvm::errs() << "\n";
+  	llvm::errs().resetColor();
+}
 
 void Expr::printWidth(llvm::raw_ostream &os, Width width) {
   switch(width) {

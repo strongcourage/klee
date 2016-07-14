@@ -23,6 +23,7 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <string>
 
 namespace llvm {
   class Type;
@@ -256,6 +257,9 @@ public:
   static bool needsResultType() { return false; }
 
   static bool classof(const Expr *) { return true; }
+
+  // dungnm: Print instructions with colors
+  void print_inst(const std::string sCase, const std::string sName) const;
 };
 
 struct Expr::CreateArg {

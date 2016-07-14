@@ -418,7 +418,8 @@ llvm::raw_fd_ostream *KleeHandler::openTestFile(const std::string &suffix,
 /* Outputs all files (.ktest, .pc, .cov etc.) describing a test case */
 void KleeHandler::processTestCase(const ExecutionState &state,
                                   const char *errorMessage,
-                                  const char *errorSuffix) {
+                                  const char *errorSuffix) {\
+  llvm::errs() << "KleeHandler::processsTestCase\n";
   if (errorMessage && ExitOnError) {
     llvm::errs() << "EXITING ON ERROR:\n" << errorMessage << "\n";
     exit(1);

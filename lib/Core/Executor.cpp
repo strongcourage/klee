@@ -423,7 +423,7 @@ Executor::~Executor() {
 void Executor::initializeGlobalObject(ExecutionState &state, ObjectState *os,
                                       const Constant *c,
                                       unsigned offset) {
-    llvm::errs() << "Executor::initializeGlobalObject" << "\n";
+    //llvm::errs() << "Executor::initializeGlobalObject" << "\n";
 #if LLVM_VERSION_CODE <= LLVM_VERSION(3, 1)
   TargetData *targetData = kmodule->targetData;
 #else
@@ -997,7 +997,7 @@ void Executor::addConstraint(ExecutionState &state, ref<Expr> condition) {
 }
 
 ref<klee::ConstantExpr> Executor::evalConstant(const Constant *c) {
-    llvm::errs() << "Executor::evalConstant" << "\n";
+    //llvm::errs() << "Executor::evalConstant" << "\n";
   if (const llvm::ConstantExpr *ce = dyn_cast<llvm::ConstantExpr>(c)) {
     return evalConstantExpr(ce);
   } else {
@@ -1511,11 +1511,12 @@ void Executor::executeInstruction(ExecutionState &state, KInstruction *ki) {
     Instruction *caller = kcaller ? kcaller->inst : 0;
     bool isVoidReturn = (ri->getNumOperands() == 0);
     ref<Expr> result = ConstantExpr::alloc(0, Expr::Bool);
+    //if (DebugPrintInstructions.size() != 0) result->print_inst("Ret", "result");
 
     if (!isVoidReturn) {
       result = eval(ki, 0, state).value;
     }
-
+    //if (DebugPrintInstructions.size() != 0) result->print_inst("Ret", "result");
     if (state.stack.size() <= 1) {
       assert(!caller && "caller set on initial stack frame");
       terminateStateOnExit(state);
@@ -2599,7 +2600,7 @@ void Executor::computeOffsets(KGEPInstruction *kgepi, TypeIt ib, TypeIt ie) {
 }
 
 void Executor::bindInstructionConstants(KInstruction *KI) {
-    llvm::errs() << "Executor::bindInstructionConstants" << "\n";
+    //llvm::errs() << "Executor::bindInstructionConstants" << "\n";
   KGEPInstruction *kgepi = static_cast<KGEPInstruction*>(KI);
 
   if (GetElementPtrInst *gepi = dyn_cast<GetElementPtrInst>(KI->inst)) {
